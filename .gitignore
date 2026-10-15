@@ -1,0 +1,39 @@
+# Built application files
+*.apk
+*.aar
+*.ap_
+*.aab
+
+# Gradle build output
+.gradle/
+/build/
+app/build/
+
+# Local configuration file (contains SDK path & local properties)
+local.properties
+
+# Android Studio / IntelliJ IDEA user-specific files
+.idea/workspace.xml
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+.idea/deploymentTargetSelector.xml
+.idea/deviceStreaming.xml
+.idea/deviceManager.xml
+.idea/shelf/
+*.iml
+
+# Keystores, Signing & Secrets
+*.jks
+*.keystore
+*.p12
+*.key
+google-services.json
+
+# OS generated files
+.DS_Store
+.externalNativeBuild
+.cxx
+/captures
