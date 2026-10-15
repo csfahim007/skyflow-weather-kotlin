@@ -1,103 +1,147 @@
 # 🌤️ SkyFlow Weather
 
-[![Android](https://img.shields.io/badge/Platform-Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://developer.android.com/)
-[![Kotlin](https://img.shields.io/badge/Language-Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
-[![Compose](https://img.shields.io/badge/UI-Jetpack%20Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white)](https://developer.android.com/jetpack/compose)
-[![Hilt](https://img.shields.io/badge/DI-Hilt-008080?style=for-the-badge&logo=google&logoColor=white)](https://dagger.dev/hilt/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
-**SkyFlow Weather** is a modern, responsive, and feature-packed Android weather application built with **Kotlin**, **Jetpack Compose**, **Material Design 3**, and **Clean Architecture**. It provides real-time weather updates, detailed hourly forecasts, a 7-day outlook, dynamic city search, unit conversion (°C/°F), and offline fallback support—powered by the open-source [Open-Meteo API](https://open-meteo.com/).
 
----
+
+
+**SkyFlow Weather** is an Android weather application built with Kotlin and modern Android development tools. It is designed to provide weather information, forecasts, city search, and customizable temperature units through a clean mobile interface.
+
+The project focuses on practical Android engineering, maintainable code organization, asynchronous data loading, and a responsive user experience.
+
+## 📲 Demo
+
+**[Download the latest release](https://github.com/csfahim007/skyflow-weather-kotlin/releases/latest)**
+
+Download the release asset and extract the ZIP if the APK is packaged inside one. Install the APK on a compatible Android device to try the application.
+
+> This is a portfolio/demo distribution and is not published on the Google Play Store.
 
 ## ✨ Features
 
-- **📍 Real-Time Weather Data**: Instant temperature, "feels like" reading, humidity, wind speed/direction, surface pressure, UV index, and precipitation.
-- **⏱️ Hourly Forecast**: Interactive 24-hour horizontal scroll bar showing hourly temperature trends, condition icons, and precipitation probabilities.
-- **📅 7-Day Outlook**: Daily forecasts with high/low temperatures, weather descriptions, max UV index, and rain chances.
-- **🔍 Dynamic City Search**: Fast geocoding search powered by Open-Meteo Geocoding API to discover and select cities worldwide.
-- **⭐ Saved Favorite Cities**: Quick-select chip row for saved cities with persistent local storage.
-- **🔄 Unit Switching**: Seamless toggle between **Metric (°C, km/h)** and **Imperial (°F, mph)** units with instantaneous UI re-calculation.
-- **📶 Offline Cache & Resilience**: Graceful error handling and offline cached weather data generation to keep the UI functional without an internet connection.
-- **🎨 Modern Material 3 UI**: Dynamic color themes, smooth animations, hero weather cards, and clean typography designed for Android devices.
+- **🌦️ Current Weather:** Displays available current weather information, such as temperature and atmospheric conditions.
+- **⏱️ Hourly Forecast:** View upcoming hourly weather information.
+- **📅 Daily Forecast:** Explore the weather outlook for upcoming days.
+- **🔍 City Search:** Search for locations and view their weather information.
+- **⭐ Favorite Cities:** Quickly revisit saved locations, if enabled in the current build.
+- **🔄 Temperature Units:** Switch between Celsius and Fahrenheit, if supported by the current implementation.
+- **📶 Network Error Handling:** Handle unsuccessful requests and connectivity problems gracefully.
+- **🎨 Android UI:** A mobile interface designed for clarity and ease of use.
 
----
+*The feature descriptions above should reflect the functionality available in the published build.*
 
-## 🏗️ Architecture & Key Technologies
+## 🛠️ Tech Stack
 
-SkyFlow Weather strictly adheres to **Android Clean Architecture** guidelines paired with the **MVVM (Model-View-ViewModel)** architectural pattern and **Unidirectional Data Flow (UDF)**.
+| Category     | Technology                                |
+| ------------ | ----------------------------------------- |
+| Language     | Kotlin                                    |
+| Platform     | Android                                   |
+| IDE          | Android Studio                            |
+| Build System | Gradle with Kotlin DSL                    |
+| Weather Data | Open-Meteo, if configured in the project  |
+| UI Framework | Jetpack Compose, if used in the project   |
+| Architecture | MVVM / Clean Architecture, if implemented |
 
+Additional libraries and testing frameworks should be documented according to the project's actual Gradle dependencies and source code.
+
+## 🏗️ Architecture
+
+The project is organized into Android application components and supporting packages to separate responsibilities and improve maintainability.
+
+```text
+weatherapp/
+├── app/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/ or kotlin/
+│   │   │   └── res/
+│   │   ├── test/
+│   │   └── androidTest/
+│   └── build.gradle.kts
+├── gradle/
+├── build.gradle.kts
+├── settings.gradle.kts
+└── README.md
 ```
-├── app
-│   ├── data               # API Services, DTOs, Mappers, Repositories & Local Storage
-│   │   ├── api            # Retrofit interfaces (Open-Meteo API & Geocoding)
-│   │   ├── dto            # Data Transfer Objects
-│   │   ├── local          # User Preferences Repository (DataStore / SharedPreferences)
-│   │   ├── mapper         # Data Mappers converting DTOs -> Domain Models
-│   │   └── repository     # WeatherRepository implementation
-│   ├── di                 # Dagger Hilt Modules (NetworkModule, RepositoryModule)
-│   ├── domain             # Pure Kotlin Domain Layer
-│   │   ├── model          # Core entities (WeatherData, CurrentWeather, CityLocation, etc.)
-│   │   └── repository     # WeatherRepository interface contract
-│   └── ui                 # UI Layer (Jetpack Compose)
-│       ├── main           # Screen composables, ViewModels, UI State definitions
-│       │   └── components # Reusable UI components (Hero Card, Forecast Lists, Search)
-│       └── theme          # Material 3 Color scheme, Typography, and Themes
-```
 
-### Tech Stack
+*This is a representative Gradle project structure. The actual package layout may differ.*
 
-- **UI Framework**: [Jetpack Compose](https://developer.android.com/jetpack/compose) with [Material 3](https://m3.material.io/)
-- **Architecture**: Clean Architecture + MVVM + Unidirectional Data Flow (UDF)
-- **Dependency Injection**: [Hilt](https://dagger.dev/hilt/) (Dagger)
-- **Networking**: [Retrofit 2](https://square.github.io/retrofit/) + [OkHttp 3](https://square.github.io/okhttp/) + [Gson](https://github.com/google/gson)
-- **Async & Reactive**: [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) & [StateFlow](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-state-flow/)
-- **Image Loading**: [Coil Compose](https://coil-kt.github.io/coil/)
-- **Weather Provider**: [Open-Meteo API](https://open-meteo.com/) *(Free, no API key required)*
-- **Testing**: JUnit 4, Kotlinx Coroutines Test, MockK, Turbine
-
----
-
-## 🛠️ Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- **Android Studio**: Ladybug (2024.2.1) or newer
-- **JDK**: Java 11 or 17
-- **Min SDK**: Android 8.0 (API Level 26)
-- **Target SDK**: Android 15 (API Level 35)
+- Android Studio
+- A compatible JDK for the project's Gradle configuration
+- Android SDK components required by the project
+- An Android emulator or compatible physical device
 
-### Build & Run
+### Build and Run
 
-1. **Clone the repository**:
+1. Clone the repository:
+
    ```bash
    git clone https://github.com/csfahim007/skyflow-weather-kotlin.git
    cd skyflow-weather-kotlin
    ```
 
-2. **Open in Android Studio**:
-   Open Android Studio and select **Open**, then choose the cloned project folder.
+2. Open the cloned directory in Android Studio.
 
-3. **Build & Deploy**:
-   - Run Gradle sync.
-   - Select an emulator or connected physical Android device.
-   - Click **Run (`Shift + F10`)**.
+3. Allow Gradle to sync and resolve the required dependencies.
 
-> 💡 **Note**: No API keys are required to run this app! Open-Meteo is open and free to use out-of-the-box.
+4. Select an available Android emulator or connected device.
 
----
+5. Run the application from Android Studio.
+
+### Build an APK
+
+You can generate a debug APK using the Gradle wrapper:
+
+```bash
+./gradlew assembleDebug
+```
+
+The resulting APK is typically located at:
+
+```text
+app/build/outputs/apk/debug/app-debug.apk
+```
+
+Alternatively, use **Build → Build APK(s)** in Android Studio.
 
 ## 🧪 Testing
 
-The repository includes unit test coverage for data mappers, repository fallback logic, and ViewModel UI state transformations.
+Run the project's local unit tests with:
 
-Run unit tests directly via Gradle:
 ```bash
 ./gradlew test
 ```
 
----
+Run Android instrumented tests separately when an emulator or compatible device is available:
+
+```bash
+./gradlew connectedAndroidTest
+```
+
+Test coverage and specific testing libraries depend on the tests included in the repository.
+
+## 🔐 API Configuration
+
+If the project uses Open-Meteo, consult its official documentation for API usage and available weather and geocoding data:
+
+- [Open-Meteo Documentation](https://open-meteo.com/en/docs)
+- [Open-Meteo Geocoding API](https://open-meteo.com/en/docs/geocoding-api)
+
+Confirm the project's actual configuration before claiming that no API key or additional setup is required.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Add a license section only after including the corresponding license file in the repository. If you choose MIT, include the complete MIT License text in a root-level `LICENSE` file.
+
+## 👨‍💻 Developer
+
+**Ahmed Fahim Kabir**
+
+- GitHub: [@csfahim007](https://github.com/csfahim007)
+
+---
+
+Built as a hands-on Android development portfolio project.
