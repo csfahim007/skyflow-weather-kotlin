@@ -6,6 +6,7 @@
 
 # Gradle build output
 .gradle/
+.kotlin/
 /build/
 app/build/
 
