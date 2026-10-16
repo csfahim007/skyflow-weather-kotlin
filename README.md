@@ -1,61 +1,74 @@
 # 🌤️ SkyFlow Weather
 
 
+[![Release v1.0.0](https://img.shields.io/badge/Release-v1.0.0-blue?style=for-the-badge&logo=github)](https://github.com/csfahim007/skyflow-weather-kotlin/releases/tag/v1.0.0)
+[![Android](https://img.shields.io/badge/Platform-Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://developer.android.com/)
+[![Kotlin](https://img.shields.io/badge/Language-Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
+[![Compose](https://img.shields.io/badge/UI-Jetpack%20Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white)](https://developer.android.com/jetpack/compose)
+[![Hilt](https://img.shields.io/badge/DI-Hilt-008080?style=for-the-badge&logo=google&logoColor=white)](https://dagger.dev/hilt/)
 
+📦 **Latest Release:** [Download SkyFlow Weather v1.0.0](https://github.com/csfahim007/skyflow-weather-kotlin/releases/tag/v1.0.0)
 
+---
 
-**SkyFlow Weather** is an Android weather application built with Kotlin and modern Android development tools. It is designed to provide weather information, forecasts, city search, and customizable temperature units through a clean mobile interface.
+**SkyFlow Weather** is a modern, responsive, and feature-packed Android weather application built with **Kotlin**, **Jetpack Compose**, **Material Design 3**, and **Clean Architecture**. It provides real-time weather updates, detailed hourly forecasts, a 7-day outlook, dynamic city search, unit conversion (°C/°F), and offline fallback support—powered by the open-source [Open-Meteo API](https://open-meteo.com/).
 
-The project focuses on practical Android engineering, maintainable code organization, asynchronous data loading, and a responsive user experience.
+---
 
-## 📲 Demo
+## 📲 Downloads & Release
 
-**[Download the latest release](https://github.com/csfahim007/skyflow-weather-kotlin/releases/latest)**
+Get the latest pre-compiled build directly from the GitHub Releases page:
 
-Download the release asset and extract the ZIP if the APK is packaged inside one. Install the APK on a compatible Android device to try the application.
+👉 **[SkyFlow Weather Release v1.0.0](https://github.com/csfahim007/skyflow-weather-kotlin/releases/tag/v1.0.0)**
 
-> This is a portfolio/demo distribution and is not published on the Google Play Store.
+Download the APK file directly to your Android device to install and test the app.
+
+---
 
 ## ✨ Features
 
-- **🌦️ Current Weather:** Displays available current weather information, such as temperature and atmospheric conditions.
-- **⏱️ Hourly Forecast:** View upcoming hourly weather information.
-- **📅 Daily Forecast:** Explore the weather outlook for upcoming days.
-- **🔍 City Search:** Search for locations and view their weather information.
-- **⭐ Favorite Cities:** Quickly revisit saved locations, if enabled in the current build.
-- **🔄 Temperature Units:** Switch between Celsius and Fahrenheit, if supported by the current implementation.
-- **📶 Network Error Handling:** Handle unsuccessful requests and connectivity problems gracefully.
-- **🎨 Android UI:** A mobile interface designed for clarity and ease of use.
+- **🌦️ Real-Time Weather Data**: Instant temperature, "feels like" reading, humidity, wind speed/direction, surface pressure, UV index, and precipitation.
+- **⏱️ Hourly Forecast**: Interactive 24-hour horizontal scroll showing hourly temperature trends, condition icons, and rain chances.
+- **📅 7-Day Outlook**: Daily forecasts with max/min temperatures, weather condition descriptions, UV index max, and precipitation probability.
+- **🔍 Dynamic City Search**: Fast geocoding search powered by Open-Meteo Geocoding API to discover and select cities worldwide.
+- **⭐ Saved Favorite Cities**: Quick-select chip row for saved cities with persistent local storage.
+- **🔄 Unit Switching**: Seamless toggle between **Metric (°C, km/h)** and **Imperial (°F, mph)** units with instantaneous UI re-calculation.
+- **📶 Offline Cache & Resilience**: Graceful error handling and offline cached weather data generation to keep the UI functional without internet connectivity.
+- **🎨 Modern Material 3 UI**: Dynamic color themes, smooth animations, hero weather cards, and clean typography.
 
-*The feature descriptions above should reflect the functionality available in the published build.*
+---
 
 ## 🛠️ Tech Stack
 
-| Category     | Technology                                |
-| ------------ | ----------------------------------------- |
-| Language     | Kotlin                                    |
-| Platform     | Android                                   |
-| IDE          | Android Studio                            |
-| Build System | Gradle with Kotlin DSL                    |
-| Weather Data | Open-Meteo, if configured in the project  |
-| UI Framework | Jetpack Compose, if used in the project   |
-| Architecture | MVVM / Clean Architecture, if implemented |
+| Category            | Technology / Library                                       |
+| ------------------- | ---------------------------------------------------------- |
+| **Language**        | Kotlin 100%                                                |
+| **UI Framework**    | Jetpack Compose + Material Design 3                        |
+| **Architecture**    | Clean Architecture + MVVM + Unidirectional Data Flow (UDF) |
+| **DI**              | Dagger Hilt                                                |
+| **Async / Reactive**| Kotlin Coroutines & StateFlow                              |
+| **Networking**      | Retrofit 2 + OkHttp 3 + Gson                               |
+| **Image Loading**   | Coil Compose                                               |
+| **Data Provider**   | Open-Meteo Weather & Geocoding API (Free, no key required) |
+| **Testing**         | JUnit 4, Coroutines Test, MockK, Turbine                   |
 
-Additional libraries and testing frameworks should be documented according to the project's actual Gradle dependencies and source code.
+---
 
-## 🏗️ Architecture
-
-The project is organized into Android application components and supporting packages to separate responsibilities and improve maintainability.
+## 🏗️ Architecture & Project Structure
 
 ```text
 weatherapp/
 ├── app/
 │   ├── src/
 │   │   ├── main/
-│   │   │   ├── java/ or kotlin/
-│   │   │   └── res/
-│   │   ├── test/
-│   │   └── androidTest/
+│   │   │   ├── java/com/example/weather_app/
+│   │   │   │   ├── data/          # API services, DTOs, Mappers, Repositories
+│   │   │   │   ├── di/            # Hilt Dependency Injection Modules
+│   │   │   │   ├── domain/        # Entities & Repository Contract
+│   │   │   │   └── ui/            # Jetpack Compose UI, ViewModels, Themes
+│   │   │   ├── res/               # Vector Drawables, Strings, XML Configs
+│   │   │   └── AndroidManifest.xml
+│   │   └── test/                  # Unit Tests for ViewModel, Repository, Mappers
 │   └── build.gradle.kts
 ├── gradle/
 ├── build.gradle.kts
@@ -63,85 +76,43 @@ weatherapp/
 └── README.md
 ```
 
-*This is a representative Gradle project structure. The actual package layout may differ.*
+---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- Android Studio
-- A compatible JDK for the project's Gradle configuration
-- Android SDK components required by the project
-- An Android emulator or compatible physical device
+- Android Studio Ladybug or newer
+- JDK 11 or 17
+- Android SDK 35 (Min SDK 26)
+- Android Emulator or physical device (Android 8.0+)
 
-### Build and Run
+### Build & Run
 
 1. Clone the repository:
-
    ```bash
    git clone https://github.com/csfahim007/skyflow-weather-kotlin.git
    cd skyflow-weather-kotlin
    ```
 
-2. Open the cloned directory in Android Studio.
+2. Open the project in Android Studio.
 
-3. Allow Gradle to sync and resolve the required dependencies.
+3. Run Gradle sync.
 
-4. Select an available Android emulator or connected device.
+4. Select a device and click **Run (`Shift + F10`)**.
 
-5. Run the application from Android Studio.
-
-### Build an APK
-
-You can generate a debug APK using the Gradle wrapper:
-
-```bash
-./gradlew assembleDebug
-```
-
-The resulting APK is typically located at:
-
-```text
-app/build/outputs/apk/debug/app-debug.apk
-```
-
-Alternatively, use **Build → Build APK(s)** in Android Studio.
+---
 
 ## 🧪 Testing
 
-Run the project's local unit tests with:
-
+Run unit tests via Gradle:
 ```bash
 ./gradlew test
 ```
 
-Run Android instrumented tests separately when an emulator or compatible device is available:
-
-```bash
-./gradlew connectedAndroidTest
-```
-
-Test coverage and specific testing libraries depend on the tests included in the repository.
-
-## 🔐 API Configuration
-
-If the project uses Open-Meteo, consult its official documentation for API usage and available weather and geocoding data:
-
-- [Open-Meteo Documentation](https://open-meteo.com/en/docs)
-- [Open-Meteo Geocoding API](https://open-meteo.com/en/docs/geocoding-api)
-
-Confirm the project's actual configuration before claiming that no API key or additional setup is required.
-
-## 📄 License
-
-Add a license section only after including the corresponding license file in the repository. If you choose MIT, include the complete MIT License text in a root-level `LICENSE` file.
-
-## 👨‍💻 Developer
-
-**Ahmed Fahim Kabir**
-
-- GitHub: [@csfahim007](https://github.com/csfahim007)
-
 ---
 
-Built as a hands-on Android development portfolio project.
+## 👨‍💻 Author
+
+**Ahmed Fahim Kabir**
+- GitHub: [@csfahim007](https://github.com/csfahim007)
