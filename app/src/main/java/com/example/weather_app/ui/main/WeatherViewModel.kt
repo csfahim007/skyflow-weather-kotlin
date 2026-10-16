@@ -19,6 +19,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -64,9 +65,17 @@ class WeatherViewModel @Inject constructor(
                         selectedCity = updatedSelected
                     )
                 }
-                if (_uiState.value.weatherData == null) {
-                    val initialCity = cities.firstOrNull() ?: WeatherUiState.defaultCity
-                    selectCity(initialCity)
+            }
+        }
+        viewModelScope.launch {
+            var isInitialLoaded = false
+            userPreferencesRepository.lastSelectedCity.collectLatest { savedLastCity ->
+                if (!isInitialLoaded) {
+                    isInitialLoaded = true
+                    val targetCity = savedLastCity
+                        ?: userPreferencesRepository.savedCities.first().firstOrNull()
+                        ?: WeatherUiState.defaultCity
+                    selectCity(targetCity)
                 }
             }
         }
@@ -113,6 +122,7 @@ class WeatherViewModel @Inject constructor(
         val isFav = _uiState.value.savedCities.any { it.id == city.id }
         val updatedCity = city.copy(isFavorite = isFav)
         _uiState.update { it.copy(selectedCity = updatedCity) }
+        userPreferencesRepository.setLastSelectedCity(updatedCity)
         loadWeatherForCity(updatedCity)
     }
 
@@ -140,6 +150,11 @@ class WeatherViewModel @Inject constructor(
                 weatherRepository.removeCity(city.id)
             } else {
                 weatherRepository.saveCity(city)
+            }
+            if (_uiState.value.selectedCity.id == city.id) {
+                val updated = city.copy(isFavorite = !city.isFavorite)
+                _uiState.update { it.copy(selectedCity = updated) }
+                userPreferencesRepository.setLastSelectedCity(updated)
             }
         }
     }

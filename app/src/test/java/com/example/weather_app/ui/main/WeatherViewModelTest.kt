@@ -37,6 +37,7 @@ class WeatherViewModelTest {
     private val tempUnitFlow = MutableStateFlow(TemperatureUnit.CELSIUS)
     private val speedUnitFlow = MutableStateFlow(SpeedUnit.KMH)
     private val savedCitiesFlow = MutableStateFlow(listOf(WeatherUiState.defaultCity))
+    private val lastSelectedCityFlow = MutableStateFlow<CityLocation?>(null)
 
     private lateinit var viewModel: WeatherViewModel
 
@@ -47,6 +48,7 @@ class WeatherViewModelTest {
         every { userPreferencesRepository.temperatureUnit } returns tempUnitFlow
         every { userPreferencesRepository.speedUnit } returns speedUnitFlow
         every { userPreferencesRepository.savedCities } returns savedCitiesFlow
+        every { userPreferencesRepository.lastSelectedCity } returns lastSelectedCityFlow
 
         val testCity = WeatherUiState.defaultCity
         val mockWeatherData = WeatherData(

@@ -31,6 +31,25 @@ class UserPreferencesRepository @Inject constructor(
     private val _savedCities = MutableStateFlow(getSavedCitiesList())
     val savedCities: Flow<List<CityLocation>> = _savedCities.asStateFlow()
 
+    private val _lastSelectedCity = MutableStateFlow(getSavedLastSelectedCity())
+    val lastSelectedCity: Flow<CityLocation?> = _lastSelectedCity.asStateFlow()
+
+    private fun getSavedLastSelectedCity(): CityLocation? {
+        val json = prefs.getString("last_selected_city", null)
+        if (json.isNullOrBlank()) return null
+        return try {
+            gson.fromJson(json, CityLocation::class.java)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    fun setLastSelectedCity(city: CityLocation) {
+        val json = gson.toJson(city)
+        prefs.edit().putString("last_selected_city", json).apply()
+        _lastSelectedCity.value = city
+    }
+
     private fun getSavedTemperatureUnit(): TemperatureUnit {
         val name = prefs.getString("temp_unit", TemperatureUnit.CELSIUS.name)
         return try {
