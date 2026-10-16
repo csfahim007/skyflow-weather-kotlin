@@ -11,7 +11,7 @@ import com.example.weather_app.domain.model.CityLocation
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -98,7 +98,7 @@ class WeatherRepositoryImplTest {
         )
 
         coEvery { geocodingApiService.searchCities(name = "New") } returns CitySearchResponseDto(mockSearchResults)
-        every { userPreferencesRepository.savedCities } returns flowOf(emptyList())
+        every { userPreferencesRepository.savedCities } returns MutableStateFlow(emptyList())
 
         val result = repository.searchCities("New")
 

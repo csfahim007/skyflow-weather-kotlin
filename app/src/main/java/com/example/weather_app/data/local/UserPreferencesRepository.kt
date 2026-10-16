@@ -8,8 +8,8 @@ import com.example.weather_app.domain.model.TemperatureUnit
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -23,16 +23,16 @@ class UserPreferencesRepository @Inject constructor(
         context.getSharedPreferences("skyflow_prefs", Context.MODE_PRIVATE)
 
     private val _temperatureUnit = MutableStateFlow(getSavedTemperatureUnit())
-    val temperatureUnit: Flow<TemperatureUnit> = _temperatureUnit.asStateFlow()
+    val temperatureUnit: StateFlow<TemperatureUnit> = _temperatureUnit.asStateFlow()
 
     private val _speedUnit = MutableStateFlow(getSavedSpeedUnit())
-    val speedUnit: Flow<SpeedUnit> = _speedUnit.asStateFlow()
+    val speedUnit: StateFlow<SpeedUnit> = _speedUnit.asStateFlow()
 
     private val _savedCities = MutableStateFlow(getSavedCitiesList())
-    val savedCities: Flow<List<CityLocation>> = _savedCities.asStateFlow()
+    val savedCities: StateFlow<List<CityLocation>> = _savedCities.asStateFlow()
 
     private val _lastSelectedCity = MutableStateFlow(getSavedLastSelectedCity())
-    val lastSelectedCity: Flow<CityLocation?> = _lastSelectedCity.asStateFlow()
+    val lastSelectedCity: StateFlow<CityLocation?> = _lastSelectedCity.asStateFlow()
 
     private fun getSavedLastSelectedCity(): CityLocation? {
         val json = prefs.getString("last_selected_city", null)

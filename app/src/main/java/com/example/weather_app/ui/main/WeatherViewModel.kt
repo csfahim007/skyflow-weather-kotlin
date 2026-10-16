@@ -19,7 +19,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -55,6 +54,7 @@ class WeatherViewModel @Inject constructor(
             }
         }
         viewModelScope.launch {
+            var isInitialLoaded = false
             userPreferencesRepository.savedCities.collectLatest { cities ->
                 _uiState.update { state ->
                     val currentSelected = state.selectedCity
@@ -65,17 +65,12 @@ class WeatherViewModel @Inject constructor(
                         selectedCity = updatedSelected
                     )
                 }
-            }
-        }
-        viewModelScope.launch {
-            var isInitialLoaded = false
-            userPreferencesRepository.lastSelectedCity.collectLatest { savedLastCity ->
+
                 if (!isInitialLoaded) {
                     isInitialLoaded = true
-                    val targetCity = savedLastCity
-                        ?: userPreferencesRepository.savedCities.first().firstOrNull()
-                        ?: WeatherUiState.defaultCity
-                    selectCity(targetCity)
+                    val savedLastCity = userPreferencesRepository.lastSelectedCity.value
+                    val initialCity = savedLastCity ?: cities.firstOrNull() ?: WeatherUiState.defaultCity
+                    selectCity(initialCity)
                 }
             }
         }
